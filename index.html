@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f6f7fb">
+  <title>Ватка — сообщения рядом</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <aside class="sidebar">
+      <header class="brand-row">
+        <a class="brand" href="#" aria-label="Ватка, главная"><span class="brand-mark">в</span><span>ватка</span></a>
+        <button class="icon-button" id="new-chat" title="Новый чат" aria-label="Новый чат"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+      </header>
+      <button class="profile-card" id="profile-open" type="button" aria-label="Изменить профиль"><div class="avatar avatar-me" id="profile-avatar">Я</div><span class="profile-copy"><strong id="profile-name">Мой профиль</strong><span><i class="online-dot"></i> в сети</span></span><span class="profile-edit">Изменить ↗</span></button>
+      <div class="section-label">СООБЩЕНИЯ <span id="chat-count">4</span></div>
+      <label class="search-box"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg><input id="search" type="search" placeholder="Найти переписку" autocomplete="off"><kbd>⌘ K</kbd></label>
+      <div class="filter-row"><button class="filter active" data-filter="all">Все</button><button class="filter" data-filter="unread">Непрочитанные <span class="unread-count">2</span></button></div>
+      <nav class="chat-list" id="chat-list" aria-label="Список чатов"></nav>
+      <footer class="sidebar-footer"><span class="status-indicator"></span> Всё синхронизировано <button aria-label="Дополнительное меню">···</button></footer>
+    </aside>
+
+    <section class="conversation" id="conversation">
+      <div class="empty-state" id="empty-state"><div class="empty-illustration"><div class="bubble bubble-a">привет!</div><div class="bubble bubble-b">👋</div><span class="sparkle">✳</span></div><h1>Тёплые разговоры<br>начинаются здесь</h1><p>Выбери переписку слева или начни новую.</p><button class="primary-button" id="empty-new">Написать кому-нибудь <span>↗</span></button></div>
+      <div id="active-chat" class="active-chat" hidden>
+        <header class="chat-header"><button class="back-button" id="back-button" aria-label="Назад к чатам">←</button><div class="avatar" id="header-avatar"></div><div class="header-copy"><strong id="header-name"></strong><span id="header-status"></span></div><div class="header-actions"><button class="icon-button" title="Поиск в переписке" aria-label="Поиск"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg></button><button class="icon-button" title="Информация" aria-label="Информация"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button></div></header>
+        <div class="selection-bar" id="selection-bar" hidden><strong id="selection-count">Выбрано: 0</strong><button type="button" data-selection-action="copy">Копировать</button><button type="button" data-selection-action="forward">Переслать</button><button type="button" data-selection-action="delete">Удалить</button><button type="button" data-selection-action="cancel">Отмена</button></div>
+        <div class="messages" id="messages"></div>
+        <div class="reply-preview" id="reply-preview" hidden><div><strong>Ответ на сообщение</strong><span id="reply-text"></span></div><button id="reply-cancel" type="button" aria-label="Отменить ответ">×</button></div>
+        <div class="emoji-picker" id="emoji-picker" hidden><div class="emoji-picker-head"><strong>Смайлики</strong><span>выбери настроение</span></div><div class="emoji-grid" id="emoji-grid"></div></div>
+        <form class="composer" id="composer"><button type="button" class="attach-button" id="attach" title="Отправить фото" aria-label="Отправить фото"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></button><input id="message-input" placeholder="Напиши что-нибудь…" autocomplete="off" aria-label="Текст сообщения"><button type="button" class="emoji-button" id="emoji" title="Смайлики" aria-label="Открыть смайлики">☺</button><button class="send-button" type="submit" aria-label="Отправить сообщение"><svg viewBox="0 0 24 24"><path d="m4 4 16 8-16 8 3-8-3-8Z"/><path d="M7 12h13"/></svg></button></form><input type="file" id="file-input" accept="image/*" hidden>
+      </div>
+    </section>
+    <aside class="right-rail"><button class="rail-button active" title="Сообщения" aria-label="Сообщения"><svg viewBox="0 0 24 24"><path d="M20 11.5a7.5 7.5 0 0 1-8 7.5 8 8 0 0 1-3.5-.8L4 20l1.3-3.6A7.3 7.3 0 0 1 4 12c0-4.1 3.6-7.5 8-7.5s8 3.1 8 7Z"/></svg></button><button class="rail-button" title="Контакты" aria-label="Контакты"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3.5 19c.5-3 2.4-4.5 5.5-4.5s5 1.5 5.5 4.5M16 11a3 3 0 1 0 0-6M17 15c2.2.3 3.4 1.6 3.7 4"/></svg></button><button class="rail-button rail-bottom" title="Настройки" aria-label="Настройки"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.1 1.9-1.7 3-2.2-.3a8 8 0 0 1-1.4.8l-.9 2h-3.5l-.8-2-1.5-.8-2.1.3-1.8-3 1.2-1.9a8 8 0 0 1 0-1.7l-1.2-1.8 1.8-3 2.1.3 1.5-.8.8-2h3.5l.9 2 1.4.8 2.2-.3 1.7 3-1.1 1.8a8 8 0 0 1 0 1.6Z" transform="translate(0 -1) scale(1 .95)"/></svg></button></aside>
+  </main>
+  <div class="modal-backdrop" id="modal" hidden><form class="new-chat-modal" id="new-chat-form"><button type="button" class="modal-close" id="modal-close">×</button><span class="eyebrow">НОВАЯ ПЕРЕПИСКА</span><h2>С кем поболтаем?</h2><p>Придумай имя собеседника и отправь первое сообщение.</p><label>Имя<input id="contact-name" required maxlength="32" placeholder="Например, Лена"></label><label>Первое сообщение<input id="first-message" maxlength="500" placeholder="Привет! Как дела?"></label><button class="primary-button" type="submit">Создать чат <span>↗</span></button></form></div>
+  <div class="modal-backdrop" id="profile-modal" hidden><form class="new-chat-modal profile-modal" id="profile-form"><button type="button" class="modal-close" id="profile-close">×</button><span class="eyebrow">ТВОЯ ВАТКА</span><h2>Настроим профиль</h2><p>Так тебя будут видеть в этом браузере.</p><div class="avatar-preview" id="avatar-preview">Я</div><label class="upload-avatar">Выбрать фотографию<input id="avatar-file" type="file" accept="image/*" hidden></label><label>Никнейм<input id="profile-nickname" required maxlength="32" placeholder="Как тебя называть?"></label><div class="profile-actions"><button type="button" class="secondary-button" id="remove-avatar">Убрать фото</button><button class="primary-button" type="submit">Сохранить профиль <span>✓</span></button></div></form></div>
+  <div class="lightbox" id="lightbox" hidden><button id="lightbox-close" aria-label="Закрыть фото">×</button><img id="lightbox-image" alt="Фото из переписки"></div>
+  <div class="message-context" id="message-context" hidden><button data-selection-action="copy">Копировать текст</button><button data-selection-action="forward">Переслать</button><button data-selection-action="delete">Удалить</button><button data-selection-action="pin">Закрепить</button><button data-selection-action="reply" id="context-reply">Ответить</button></div>
+  <div class="modal-backdrop" id="forward-modal" hidden><form class="new-chat-modal" id="forward-form"><button type="button" class="modal-close" id="forward-close">×</button><span class="eyebrow">ПЕРЕСЫЛКА</span><h2>Куда отправить?</h2><p>Выбери чат для пересылки выделенных сообщений.</p><label>Чат<select id="forward-target" required></select></label><button class="primary-button" type="submit">Переслать <span>↗</span></button></form></div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
+
